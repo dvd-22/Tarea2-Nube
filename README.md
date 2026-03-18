@@ -20,10 +20,12 @@ servicio-productos
 
 - <http://localhost:9001/listar>
 - <http://localhost:9001/ver/id/>
+- <http://localhost:9001/eliminar/id/>
 
 servicio-item
 
 - <http://localhost:8002/listar>
 - <http://localhost:8002/ver/id/cantidad/num>
+- <http://localhost:8002/eliminar/id/>
 
 Por alguna razón, a veces tarda un ratillo en iniciar bien.
