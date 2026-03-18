@@ -16,5 +16,10 @@ git clone https://github.com/dvd-22/Tarea2-Nube.git
 
 Podemos acceder a cada servicio a través de los siguientes enlaces:
 
+servicio-productos
+<http://localhost:9001/listar>
+<http://localhost:9001/ver/id/>
+
+servicio-item
 <http://localhost:8002/listar>
 <http://localhost:8002/ver/id/cantidad/num>
