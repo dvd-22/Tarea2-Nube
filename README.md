@@ -25,3 +25,5 @@ servicio-item
 
 - <http://localhost:8002/listar>
 - <http://localhost:8002/ver/id/cantidad/num>
+
+Por alguna razón, a veces tarda un ratillo en iniciar bien.
