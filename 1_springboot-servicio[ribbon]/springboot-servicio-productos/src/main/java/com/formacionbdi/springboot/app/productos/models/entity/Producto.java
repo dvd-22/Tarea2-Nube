@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "productos")
@@ -20,7 +21,10 @@ public class Producto implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String nombre;
+	private String marca;
+	private String modelo;
+	@Column(name = "anio")
+	private Integer anio;
 	private Double precio;
 	
 	@Column(name = "create_at")
@@ -33,11 +37,23 @@ public class Producto implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getNombre() {
-		return nombre;
+	public String getMarca() {
+		return marca;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+	public String getModelo() {
+		return modelo;
+	}
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+	public Integer getAnio() {
+		return anio;
+	}
+	public void setAnio(Integer anio) {
+		this.anio = anio;
 	}
 	public Double getPrecio() {
 		return precio;
@@ -52,6 +68,21 @@ public class Producto implements Serializable{
 		this.createAt = createAt;
 	}
 
+	@Transient
+	public String getNombre() {
+		if (marca == null && modelo == null) {
+			return null;
+		}
+		if (marca == null) {
+			return modelo;
+		}
+		if (modelo == null) {
+			return marca;
+		}
+		return marca + " " + modelo;
+	}
+
 	private static final long serialVersionUID = 1285454306356845809L;
 
 }
+

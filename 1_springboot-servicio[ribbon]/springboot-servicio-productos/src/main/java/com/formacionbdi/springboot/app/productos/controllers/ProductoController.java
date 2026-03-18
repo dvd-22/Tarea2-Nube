@@ -34,4 +34,10 @@ public class ProductoController {
 		return ResponseEntity.noContent().build();
 	}
 
+	@GetMapping("/eliminar/{id}")
+	public ResponseEntity<?> eliminarPorNavegador(@PathVariable Long id) {
+		productoService.eliminar(id);
+		return ResponseEntity.ok("Producto eliminado");
+	}
+
 }

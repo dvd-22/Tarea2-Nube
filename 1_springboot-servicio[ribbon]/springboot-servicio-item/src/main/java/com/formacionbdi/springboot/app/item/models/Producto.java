@@ -6,10 +6,11 @@ public class Producto {
 	
 	private Long id;
 	private String marca;
-	private int año;
-	private double precio ;
-	private Date createAt;
 	private String modelo;
+	private Integer anio;
+	private Double precio;
+	private Date createAt;
+
 	public Long getId() {
 		return id;
 	}
@@ -22,29 +23,42 @@ public class Producto {
 	public void setMarca(String marca) {
 		this.marca = marca;
 	}
-	public int getAño() {
-		return año;
-	}
-	public void setAño(int año) {
-		this.año = año;
-	}
-	public double getPrecio(){
-		return precio;
-	}
-	public void setPrecio(double precio){
-		this.precio = precio;
-	}
-	public String getModelo(){
+	public String getModelo() {
 		return modelo;
 	}
-	public void setModelo(String modelo){
-		this.modelo=modelo;
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+	public Integer getAnio() {
+		return anio;
+	}
+	public void setAnio(Integer anio) {
+		this.anio = anio;
+	}
+	public Double getPrecio(){
+		return precio;
+	}
+	public void setPrecio(Double precio){
+		this.precio = precio;
 	}
 	public Date getCreateAt() {
 		return createAt;
 	}
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
+	}
+
+	public String getNombre() {
+		if (marca == null && modelo == null) {
+			return null;
+		}
+		if (marca == null) {
+			return modelo;
+		}
+		if (modelo == null) {
+			return marca;
+		}
+		return marca + " " + modelo;
 	}
 	
 
