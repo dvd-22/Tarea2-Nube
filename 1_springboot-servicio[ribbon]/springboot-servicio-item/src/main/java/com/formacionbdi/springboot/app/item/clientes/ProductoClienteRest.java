@@ -11,8 +11,8 @@ import com.formacionbdi.springboot.app.item.models.Producto;
 
 // Para Feing:
 //@FeignClient(name = "servicio-productos", url="localhost:8001")
-// Para Feing con Ribbon:
-@FeignClient(name = "servicio-productos")
+// Para Feing con Ribbon y Hystrix:
+@FeignClient(name = "servicio-productos", fallback = ProductoClienteRestFallback.class)
 
 public interface ProductoClienteRest {
 	
@@ -26,3 +26,4 @@ public interface ProductoClienteRest {
 	public void eliminarProducto(@PathVariable Long id);
 
 }
+

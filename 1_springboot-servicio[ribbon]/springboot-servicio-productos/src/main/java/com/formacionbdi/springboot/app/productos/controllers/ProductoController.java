@@ -25,7 +25,10 @@ public class ProductoController {
 	
 	@GetMapping("/ver/{id}")
 	public Producto detalle(@PathVariable Long id) {
-		return productoService.findById(id);
+    	if (id.equals(10L)) {
+        	throw new RuntimeException("Fallo simulado en servicio-productos");
+    	}
+    	return productoService.findById(id);
 	}
 
 	@DeleteMapping("/eliminar/{id}")
