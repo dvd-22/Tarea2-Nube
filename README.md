@@ -15,7 +15,12 @@ git clone https://github.com/dvd-22/Tarea2-Nube.git
 
 1. Después de clonar el repositorio, hay que abrirlo con Eclipse Spring Tool Suite (STS) o cualquier IDE compatible con Spring Boot.
 
-2. Dentro de Spring Tools, seleccionamos los 2 servicios y damos a correr para cada uno en el botón de hasta arriba
+2. Dentro de Spring Tools, seleccionamos los 3 servicios y damos a correr para cada uno en el botón de hasta arriba
+Los servicios que deben iniciarse son:
+
+- springboot-eureka-server [:8761]
+- springboot-servicio-item [:8002]
+- springboot-servicio-productos [:9001]
 
 Podemos acceder a cada servicio a través de los siguientes enlaces:
 
