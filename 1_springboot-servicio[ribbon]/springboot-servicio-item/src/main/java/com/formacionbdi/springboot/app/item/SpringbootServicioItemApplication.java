@@ -15,5 +15,4 @@ public class SpringbootServicioItemApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootServicioItemApplication.class, args);
 	}
-
 }

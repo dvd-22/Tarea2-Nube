@@ -17,7 +17,9 @@ public class ItemServiceFeign implements ItemService {
 
 	@Override
 	public List<Item> findAll() {
-		return clienteFeign.listar().stream().map(p -> new Item(p, 1)).collect(Collectors.toList());
+		return clienteFeign.listar().stream()
+				.map(p -> new Item(p, 1))
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -29,5 +31,4 @@ public class ItemServiceFeign implements ItemService {
 	public void eliminar(Long id) {
 		clienteFeign.eliminarProducto(id);
 	}
-
 }
