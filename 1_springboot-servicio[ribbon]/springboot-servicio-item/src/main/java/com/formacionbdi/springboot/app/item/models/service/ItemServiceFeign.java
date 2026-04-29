@@ -28,6 +28,11 @@ public class ItemServiceFeign implements ItemService {
 	}
 
 	@Override
+	public Item findByIdConRetardo(Long id, Integer cantidad, Integer retardo) {
+		return new Item(clienteFeign.detalleConRetardo(id, retardo), cantidad);
+	}
+
+	@Override
 	public void eliminar(Long id) {
 		clienteFeign.eliminarProducto(id);
 	}

@@ -22,6 +22,9 @@ public interface ProductoClienteRest {
 	@GetMapping("/ver/{id}")
 	public Producto detalle(@PathVariable Long id);
 
+	@GetMapping("/ver/{id}/retardo/{tiempo}")
+	public Producto detalleConRetardo(@PathVariable Long id, @PathVariable Integer tiempo);
+
 	@DeleteMapping("/eliminar/{id}")
 	public void eliminarProducto(@PathVariable Long id);
 

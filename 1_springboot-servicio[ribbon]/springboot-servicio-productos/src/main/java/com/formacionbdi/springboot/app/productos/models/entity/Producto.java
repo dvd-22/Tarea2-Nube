@@ -26,7 +26,10 @@ public class Producto implements Serializable{
 	@Column(name = "anio")
 	private Integer anio;
 	private Double precio;
-	
+
+	@Transient
+	private Integer port;
+
 	@Column(name = "create_at")
 	@Temporal(TemporalType.DATE)
 	private Date createAt;
@@ -61,6 +64,15 @@ public class Producto implements Serializable{
 	public void setPrecio(Double precio) {
 		this.precio = precio;
 	}
+
+	public Integer getPort() {
+		return port;
+	}
+
+	public void setPort(Integer port) {
+		this.port = port;
+	}
+
 	public Date getCreateAt() {
 		return createAt;
 	}

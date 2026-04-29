@@ -3,6 +3,7 @@ package com.formacionbdi.springboot.app.productos.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +18,19 @@ public class ProductoController {
 	
 	@Autowired
 	private IProductoService productoService;
+
+	@Value("${server.port}")
+	private Integer port;
 	
 	@GetMapping("/listar")
 	public List<Producto> listar(){
-		return productoService.findAll();
+		List<Producto> productos = productoService.findAll();
+		productos.forEach(producto -> {
+			if (producto != null) {
+				producto.setPort(port);
+			}
+		});
+		return productos;
 	}
 	
 	@GetMapping("/ver/{id}")
@@ -28,7 +38,25 @@ public class ProductoController {
     	if (id.equals(10L)) {
         	throw new RuntimeException("Fallo simulado en servicio-productos");
     	}
-    	return productoService.findById(id);
+    	Producto producto = productoService.findById(id);
+    	if (producto != null) {
+    		producto.setPort(port);
+    	}
+    	return producto;
+	}
+
+	@GetMapping("/ver/{id}/retardo/{tiempo}")
+	public Producto detalleConRetardo(@PathVariable Long id, @PathVariable Integer tiempo) {
+		try {
+			Thread.sleep(tiempo);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		Producto producto = productoService.findById(id);
+		if (producto != null) {
+			producto.setPort(port);
+		}
+		return producto;
 	}
 
 	@DeleteMapping("/eliminar/{id}")

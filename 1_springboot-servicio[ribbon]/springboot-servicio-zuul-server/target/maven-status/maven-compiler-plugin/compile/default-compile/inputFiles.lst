@@ -1,0 +1,3 @@
+/home/eyaelcr/Lic.Ciencias/Cloud/Tarea4/Tarea2-Nube/1_springboot-servicio[ribbon]/springboot-servicio-zuul-server/src/main/java/com/formacionbdi/springboot/app/zuul/filters/PreTiempoTranscurridoFilter.java
+/home/eyaelcr/Lic.Ciencias/Cloud/Tarea4/Tarea2-Nube/1_springboot-servicio[ribbon]/springboot-servicio-zuul-server/src/main/java/com/formacionbdi/springboot/app/zuul/SpringbootServicioZuulServerApplication.java
+/home/eyaelcr/Lic.Ciencias/Cloud/Tarea4/Tarea2-Nube/1_springboot-servicio[ribbon]/springboot-servicio-zuul-server/src/main/java/com/formacionbdi/springboot/app/zuul/filters/PostTiempoTranscurridoFilter.java

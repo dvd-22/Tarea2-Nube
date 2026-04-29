@@ -31,7 +31,14 @@ public class ItemController {
         return itemService.findById(id, cantidad);
     }
 
-    public Item metodoAlternativo(Long id, Integer cantidad) {
+    @HystrixCommand(fallbackMethod = "metodoAlternativoLatencia")
+    @GetMapping("/ver/{id}/cantidad/{cantidad}/retardo/{retardo}")
+    public Item detalleConRetardo(@PathVariable Long id, @PathVariable Integer cantidad, @PathVariable Integer retardo) {
+        return itemService.findByIdConRetardo(id, cantidad, retardo);
+    }
+
+    // Fallback para /ver/{id}/cantidad/{cantidad}
+    public Item metodoAlternativo(Long id, Integer cantidad, Throwable e) {
         Item item = new Item();
         Producto producto = new Producto();
 
@@ -44,6 +51,32 @@ public class ItemController {
         producto.setPrecio(0.0);
 
         item.setProducto(producto);
+
+        if (e != null) {
+            System.out.println("Fallback activado: " + e.getMessage());
+        }
+
+        return item;
+    }
+
+    // Fallback para /ver/{id}/cantidad/{cantidad}/retardo/{retardo}
+    public Item metodoAlternativoLatencia(Long id, Integer cantidad, Integer retardo, Throwable e) {
+        Item item = new Item();
+        Producto producto = new Producto();
+
+        item.setCantidad(cantidad);
+
+        producto.setId(id);
+        producto.setMarca("No disponible");
+        producto.setModelo("Servicio no disponible");
+        producto.setAnio(0);
+        producto.setPrecio(0.0);
+
+        item.setProducto(producto);
+
+        if (e != null) {
+            System.out.println("Fallback activado (latencia): " + e.getMessage());
+        }
 
         return item;
     }

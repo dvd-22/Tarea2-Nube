@@ -31,6 +31,12 @@ public class ProductoClienteRestFallback implements ProductoClienteRest {
 	}
 
 	@Override
+	public Producto detalleConRetardo(Long id, Integer tiempo) {
+		System.out.println("Fallback ejecutado: detalleConRetardo(" + id + ", " + tiempo + ")");
+		return detalle(id);
+	}
+
+	@Override
 	public void eliminarProducto(Long id) {
 		// Método fallback: simplemente registra el intento
 		System.out.println("Fallback ejecutado: eliminarProducto(" + id + ")");
