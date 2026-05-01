@@ -10,7 +10,7 @@ Equipo:
 1. Para ejecutar el proyecto, primero debes clonar el repositorio en tu máquina local. Puedes hacerlo utilizando el siguiente comando en tu terminal:
 
 ```bash
-git clone https://github.com/dvd-22/Tarea2-Nube.git
+git clone https://github.com/dvd-22/Tarea-Nube.git
 ```
 
 1. Después de clonar el repositorio, hay que abrirlo con Eclipse Spring Tool Suite (STS) o cualquier IDE compatible con Spring Boot.
@@ -36,4 +36,4 @@ servicio-item
 - <http://localhost:8002/ver/id/cantidad/num>
 - <http://localhost:8002/eliminar/id/>
 
-Por alguna razón, a veces tarda un ratillo en iniciar bien.
+Por alguna razón, a veces tarda un ratillo en iniciar bien.>
