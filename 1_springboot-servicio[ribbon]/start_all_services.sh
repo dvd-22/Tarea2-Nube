@@ -5,7 +5,7 @@
 
 set -e
 
-PROJECT_DIR="/home/eyaelcr/Lic.Ciencias/Cloud/Tarea4/Tarea2-Nube/1_springboot-servicio[ribbon]"
+PROJECT_DIR="./1_springboot-servicio[ribbon]"
 
 echo "=========================================="
 echo "Iniciando Servicios - Zuul Gateway Demo"

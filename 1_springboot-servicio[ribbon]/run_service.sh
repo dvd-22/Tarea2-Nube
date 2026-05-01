@@ -4,7 +4,7 @@
 # Uso: ./run_service.sh [eureka|productos|items|zuul]
 
 SERVICE=$1
-PROJECT_DIR="/home/eyaelcr/Lic.Ciencias/Cloud/Tarea4/Tarea2-Nube/1_springboot-servicio[ribbon]"
+PROJECT_DIR="./1_springboot-servicio[ribbon]"
 
 if [ -z "$SERVICE" ]; then
     echo "Uso: $0 [eureka|productos|productos2|items|items2|zuul]"
