@@ -8,11 +8,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.HttpStatus;
 
 import com.formacionbdi.springboot.app.productos.models.entity.Producto;
 import com.formacionbdi.springboot.app.productos.models.service.IProductoService;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class ProductoController {
 	
@@ -57,6 +64,26 @@ public class ProductoController {
 			producto.setPort(port);
 		}
 		return producto;
+	}
+
+	@PostMapping("/crear")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Producto crear(@RequestBody Producto producto) {
+		return productoService.save(producto);
+	}
+
+	@PutMapping("/editar/{id}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Producto editar(@RequestBody Producto producto, @PathVariable Long id) {
+		Producto productoDb = productoService.findById(id);
+		if (productoDb != null) {
+			productoDb.setMarca(producto.getMarca());
+			productoDb.setModelo(producto.getModelo());
+			productoDb.setAnio(producto.getAnio());
+			productoDb.setPrecio(producto.getPrecio());
+			return productoService.save(productoDb);
+		}
+		return null;
 	}
 
 	@DeleteMapping("/eliminar/{id}")

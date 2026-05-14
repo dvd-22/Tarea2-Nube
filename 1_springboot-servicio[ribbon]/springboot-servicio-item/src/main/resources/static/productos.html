@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Productos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #0d47a1;
+            color: white;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: white;
+            font-size: 14px;
+        }
+        .btn-add { background-color: #28a745; margin-bottom: 15px; }
+        .btn-edit { background-color: #ffc107; color: black; margin-right: 5px; }
+        .btn-delete { background-color: #dc3545; }
+        .btn:hover { opacity: 0.9; }
+
+        /* Modal Styles */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.4); 
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 400px;
+            border-radius: 8px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn-save { background-color: #007bff; width: 100%; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Lista de Modelos de Autos</h1>
+    <button class="btn btn-add" onclick="openModal()">Añadir</button>
+    <table id="productosTable">
+        <thead>
+            <tr>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Año</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Los datos se cargarán aquí con JS -->
+        </tbody>
+    </table>
+</div>
+
+<!-- El Modal -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2 id="modalTitle">Nuevo Modelo</h2>
+    <input type="hidden" id="productoId">
+    <div class="form-group">
+        <label for="marca">Marca:</label>
+        <input type="text" id="marca" required>
+    </div>
+    <div class="form-group">
+        <label for="modelo">Modelo:</label>
+        <input type="text" id="modelo" required>
+    </div>
+    <div class="form-group">
+        <label for="anio">Año:</label>
+        <input type="number" id="anio" required>
+    </div>
+    <div class="form-group">
+        <label for="precio">Precio:</label>
+        <input type="number" step="0.01" id="precio" required>
+    </div>
+    <button class="btn btn-save" onclick="saveProducto()">Guardar</button>
+  </div>
+</div>
+
+<script>
+    const API_PRODUCTOS_URL = 'http://localhost:9001';
+    // Utilizamos el endpoint de este mismo servidor (servicio-item) para obtener los items
+    const API_ITEMS_URL = ''; 
+
+    // Cargar productos al iniciar
+    document.addEventListener('DOMContentLoaded', loadProductos);
+
+    async function loadProductos() {
+        try {
+            const response = await fetch(`${API_ITEMS_URL}/listar`);
+            const data = await response.json();
+            const tbody = document.querySelector('#productosTable tbody');
+            tbody.innerHTML = '';
+            
+            data.forEach(item => {
+                const p = item.producto;
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${p.marca}</td>
+                    <td>${p.modelo}</td>
+                    <td>${p.anio}</td>
+                    <td>$${p.precio.toFixed(2)}</td>
+                    <td>${item.cantidad}</td>
+                    <td>
+                        <button class="btn btn-edit" onclick="editProducto(${p.id}, '${p.marca}', '${p.modelo}', ${p.anio}, ${p.precio})">Editar</button>
+                        <button class="btn btn-delete" onclick="deleteProducto(${p.id})">Eliminar</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        } catch (error) {
+            console.error('Error al cargar los productos:', error);
+        }
+    }
+
+    async function deleteProducto(id) {
+        if (confirm('¿Estás seguro de eliminar este modelo?')) {
+            try {
+                await fetch(`${API_PRODUCTOS_URL}/eliminar/${id}`, { method: 'DELETE' });
+                loadProductos();
+            } catch (error) {
+                console.error('Error al eliminar:', error);
+            }
+        }
+    }
+
+    function openModal() {
+        document.getElementById('myModal').style.display = 'block';
+        document.getElementById('modalTitle').innerText = 'Nuevo Modelo';
+        document.getElementById('productoId').value = '';
+        document.getElementById('marca').value = '';
+        document.getElementById('modelo').value = '';
+        document.getElementById('anio').value = '';
+        document.getElementById('precio').value = '';
+    }
+
+    function closeModal() {
+        document.getElementById('myModal').style.display = 'none';
+    }
+
+    function editProducto(id, marca, modelo, anio, precio) {
+        openModal();
+        document.getElementById('modalTitle').innerText = 'Editar Modelo';
+        document.getElementById('productoId').value = id;
+        document.getElementById('marca').value = marca;
+        document.getElementById('modelo').value = modelo;
+        document.getElementById('anio').value = anio;
+        document.getElementById('precio').value = precio;
+    }
+
+    async function saveProducto() {
+        const id = document.getElementById('productoId').value;
+        const producto = {
+            marca: document.getElementById('marca').value,
+            modelo: document.getElementById('modelo').value,
+            anio: parseInt(document.getElementById('anio').value),
+            precio: parseFloat(document.getElementById('precio').value)
+        };
+
+        try {
+            if (id) {
+                // Actualizar
+                await fetch(`${API_PRODUCTOS_URL}/editar/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(producto)
+                });
+            } else {
+                // Crear
+                await fetch(`${API_PRODUCTOS_URL}/crear`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(producto)
+                });
+            }
+            closeModal();
+            loadProductos();
+        } catch (error) {
+            console.error('Error al guardar:', error);
+        }
+    }
+</script>
+</body>
+</html>

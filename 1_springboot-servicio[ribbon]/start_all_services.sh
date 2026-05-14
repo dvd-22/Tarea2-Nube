@@ -5,7 +5,8 @@
 
 set -e
 
-PROJECT_DIR="./1_springboot-servicio[ribbon]"
+# Obtenemos el directorio donde se encuentra el script
+PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 echo "=========================================="
 echo "Iniciando Servicios - Zuul Gateway Demo"

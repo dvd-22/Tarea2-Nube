@@ -29,6 +29,12 @@ public class ProductoServiceImpl implements IProductoService{
 
 	@Override
 	@Transactional
+	public Producto save(Producto producto) {
+		return productoDao.save(producto);
+	}
+
+	@Override
+	@Transactional
 	public void eliminar(Long id) {
 		productoDao.deleteById(id);
 	}
